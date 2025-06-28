@@ -51,8 +51,8 @@ runs:
     - name: Push to hub
       shell: bash
       run: |
-        pip install -r requirements.txt
-        python sync_with_spaces.py \
+        pip install -r ${{ github.action_path }}/requirements.txt
+        python ${{ github.action_path }}/sync_with_spaces.py \
           --repo_id ${{ inputs.huggingface_repo_id }} \
           --directory "${{ inputs.github_repo_id != '' && format('cloned_github_repo/{0}', inputs.subdirectory) || format('{0}/{1}', inputs.repo_path, inputs.subdirectory) }}" \
           --token ${{ inputs.hf_token }} \
