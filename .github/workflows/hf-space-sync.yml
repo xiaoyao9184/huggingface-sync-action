@@ -37,3 +37,15 @@ jobs:
           repo_type: 'space'
           space_sdk: 'gradio'
           subdirectory: 'test/gradio'
+
+      - name: Sync README file Gradio space to HuggingFace
+        uses: ./
+        with:
+          # repo_path: '.'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/gradio'
+          include_readme: true
