@@ -1,5 +1,7 @@
 from huggingface_hub import create_repo, upload_folder, whoami
-
+from git import Repo
+import textwrap
+import os
 
 def main(
     repo_id: str,
@@ -8,7 +10,8 @@ def main(
     repo_type: str = "space",
     space_sdk: str = "gradio",
     private: bool = False,
-    include_readme: bool = False
+    include_readme: bool = False,
+    generate_message: bool = False
 ):
     print("Syncing with Hugging Face Spaces...")
 
@@ -33,16 +36,39 @@ def main(
     ignore_patterns = ["*.git*", "*README.md*"]
     if include_readme:
         ignore_patterns.remove("*README.md*")
+    commit_message = generate_commit_message(generate_message, directory)
     commit_url = upload_folder(
         folder_path=directory,
         repo_id=repo_id,
         repo_type=repo_type,
         token=token,
-        commit_message="Synced repo using 'sync_with_huggingface' Github Action",
+        commit_message=commit_message,
         ignore_patterns=ignore_patterns
     )
     print(f"\t- Repo synced: {commit_url}")
 
+def generate_commit_message(generate_message: bool, directory: str):
+    commit_message = "Synced repo using 'sync_with_huggingface' Github Action"
+    if generate_message:
+        try:
+            repo = Repo(directory, search_parent_directories=True)
+            remote_url = repo.remotes.origin.url
+            commit_id = repo.head.commit.hexsha
+            action_repository = os.getenv("GITHUB_ACTION_REPOSITORY", "Unknown")
+            action_ref = os.getenv("GITHUB_ACTION_REF", "Unknown")
+            return textwrap.dedent(f"""\
+                {commit_message}
+
+                original:
+                    - remote: "{remote_url}"
+                    - commit: "{commit_id}"
+                sync_with_huggingface:
+                    - repository: "{action_repository}"
+                    - ref: "{action_ref}"
+            """)
+        except Exception as e:
+            print(f"Failed to generate commit message: {e}")
+    return commit_message
 
 if __name__ == "__main__":
     from fire import Fire

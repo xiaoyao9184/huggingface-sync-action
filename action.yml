@@ -18,6 +18,9 @@ inputs:
   include_readme:
     description: Include README.md for sync
     default: 'False'
+  generate_message:
+    description: Generate commit message for sync
+    default: 'False'
   huggingface_repo_id:
     description: Hugging Face repo ID to sync
     required: true
@@ -56,4 +59,5 @@ runs:
           --repo_type ${{ inputs.repo_type }} \
           --space_sdk ${{ inputs.space_sdk }} \
           --private ${{ (inputs.private == true || inputs.private == 'true' || inputs.private == 'True') && 'True' || 'False' }} \
-          --include_readme ${{ (inputs.include_readme == true || inputs.include_readme == 'true' || inputs.include_readme == 'True') && 'True' || 'False' }}
+          --include_readme ${{ (inputs.include_readme == true || inputs.include_readme == 'true' || inputs.include_readme == 'True') && 'True' || 'False' }} \
+          --generate_message ${{ (inputs.generate_message == true || inputs.generate_message == 'true' || inputs.generate_message == 'True') && 'True' || 'False' }}
