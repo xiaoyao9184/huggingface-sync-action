@@ -56,4 +56,4 @@ runs:
           --token ${{ inputs.hf_token }} \
           --repo_type ${{ inputs.repo_type }} \
           --space_sdk ${{ inputs.space_sdk }} \
-          --private ${{ inputs.private }}
+          --private ${{ inputs.private == 'true' && 'True' || 'False' }}
