@@ -1,0 +1,28 @@
+
+name: HuggingFace Space Sync
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feature/test-action'
+
+jobs:
+  push-hf-space:
+    name: Push source code to HuggingFace
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync Gradio space to HuggingFace
+        uses: ./
+        with:
+          github_repo_id: '${{ github.repository_owner }}/huggingface-sync-action'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/gradio'
