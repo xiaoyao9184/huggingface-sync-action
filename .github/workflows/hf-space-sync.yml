@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'feature/test-action'
+      - 'feature/**'
 
 jobs:
   push-hf-space:
@@ -16,7 +16,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Sync Gradio space to HuggingFace
+      - name: Sync local repo Gradio space to HuggingFace
+        uses: ./
+        with:
+          # repo_path: '.'
+          huggingface_repo_id: '${{ secrets.HF_USERNAME }}/huggingface-sync-action-gradio'
+          hf_token: ${{ secrets.HF_TOKEN }}
+          private: true
+          repo_type: 'space'
+          space_sdk: 'gradio'
+          subdirectory: 'test/gradio'
+
+      - name: Sync Github repo Gradio space to HuggingFace
         uses: ./
         with:
           github_repo_id: '${{ github.repository_owner }}/huggingface-sync-action'
