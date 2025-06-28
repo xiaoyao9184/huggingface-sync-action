@@ -10,11 +10,14 @@ inputs:
     description: Repository Path for sync
     default: '.'
   github_repo_id:
-    description: GitHub repo ID to sync
+    description: GitHub repo ID for sync
     default: ''
   subdirectory:
-    description: Subdirectory to sync
+    description: Subdirectory for sync
     default: ''
+  include_readme:
+    description: Include README.md for sync
+    default: 'False'
   huggingface_repo_id:
     description: Hugging Face repo ID to sync
     required: true
@@ -61,4 +64,5 @@ runs:
           --token ${{ inputs.hf_token }} \
           --repo_type ${{ inputs.repo_type }} \
           --space_sdk ${{ inputs.space_sdk }} \
-          --private ${{ (inputs.private == true || inputs.private == 'true' || inputs.private == 'True') && 'True' || 'False' }}
+          --private ${{ (inputs.private == true || inputs.private == 'true' || inputs.private == 'True') && 'True' || 'False' }} \
+          --include_readme ${{ (inputs.include_readme == true || inputs.include_readme == 'true' || inputs.include_readme == 'True') && 'True' || 'False' }}

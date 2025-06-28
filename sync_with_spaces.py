@@ -8,6 +8,7 @@ def main(
     repo_type: str = "space",
     space_sdk: str = "gradio",
     private: bool = False,
+    include_readme: bool = False
 ):
     print("Syncing with Hugging Face Spaces...")
 
@@ -29,13 +30,16 @@ def main(
     print(f"\t- Repo URL: {url}")
 
     # Sync folder
+    ignore_patterns = ["*.git*", "*README.md*"]
+    if include_readme:
+        ignore_patterns.remove("*README.md*")
     commit_url = upload_folder(
         folder_path=directory,
         repo_id=repo_id,
         repo_type=repo_type,
         token=token,
         commit_message="Synced repo using 'sync_with_huggingface' Github Action",
-        ignore_patterns=["*.git*", "*README.md*"],
+        ignore_patterns=ignore_patterns
     )
     print(f"\t- Repo synced: {commit_url}")
 
