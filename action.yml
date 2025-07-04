@@ -19,7 +19,7 @@ inputs:
     description: Include README.md for sync
     default: 'False'
   generate_message:
-    description: Generate commit message for sync
+    description: Auto-generate a useful commit message for your sync
     default: 'False'
   huggingface_repo_id:
     description: Hugging Face repo ID to sync
