@@ -1,7 +1,10 @@
-from huggingface_hub import create_repo, upload_folder, whoami
+
+from huggingface_hub import create_repo, list_repo_files, upload_folder, whoami
+from huggingface_hub.utils import RepositoryNotFoundError
 from git import Repo
 import textwrap
 import os
+
 
 def main(
     repo_id: str,
@@ -22,15 +25,18 @@ def main(
     print(f"\t- Repo ID: {repo_id}")
 
     print(f"\t- Directory: {directory}")
-    url = create_repo(
-        repo_id,
-        token=token,
-        exist_ok=True,
-        repo_type=repo_type,
-        space_sdk=space_sdk if repo_type == "space" else None,
-        private=private,
-    )
-    print(f"\t- Repo URL: {url}")
+    try:
+        list_repo_files(repo_id=repo_id, token=token, repo_type=repo_type)
+    except RepositoryNotFoundError:
+        url = create_repo(
+            repo_id,
+            token=token,
+            exist_ok=True,
+            repo_type=repo_type,
+            space_sdk=space_sdk if repo_type == "space" else None,
+            private=private,
+        )
+        print(f"\t- Repo URL: {url}")
 
     # Sync folder
     ignore_patterns = ["*.git*", "*README.md*"]
