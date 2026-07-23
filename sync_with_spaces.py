@@ -1,6 +1,5 @@
 
-from huggingface_hub import create_repo, list_repo_files, upload_folder, whoami
-from huggingface_hub.utils import RepositoryNotFoundError
+from huggingface_hub import create_repo, repo_exists, upload_folder, whoami
 from git import Repo
 import textwrap
 import os
@@ -25,9 +24,9 @@ def main(
     print(f"\t- Repo ID: {repo_id}")
 
     print(f"\t- Directory: {directory}")
-    try:
-        list_repo_files(repo_id=repo_id, token=token, repo_type=repo_type)
-    except RepositoryNotFoundError:
+
+    exists = repo_exists(repo_id=repo_id, token=token, repo_type=repo_type)
+    if not exists:
         url = create_repo(
             repo_id,
             token=token,
