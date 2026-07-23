@@ -8,10 +8,6 @@
             "program": "${workspaceFolder}/sync_with_spaces.py",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "env": {
-                "HF_TOKEN": "${env:HF_TOKEN}",
-                "HF_ENDPOINT": "https://huggingface.co"
-            },
             "args": [
                 "--repo_id",
                 "${input:huggingfaceRepoId}",
@@ -30,6 +26,10 @@
                 "--generate_message",
                 "${input:generateMessage}"
             ],
+            "env": {
+                "HF_TOKEN": "${input:hfToken}",
+                "HF_ENDPOINT": "https://huggingface.co"
+            },
             "justMyCode": false
         }
     ],
