@@ -2,12 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Sync with Hugging Face Spaces",
+            "name": "python: sync_with_huggingface.py",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/sync_with_huggingface.py",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
+            "preLaunchTask": "shell: link gradio test space",
             "args": [
                 "--repo_id",
                 "${input:huggingfaceRepoId}",
@@ -38,13 +39,13 @@
             "id": "huggingfaceRepoId",
             "type": "promptString",
             "description": "Hugging Face repo id, e.g. username/space-name",
-            "default": "your-username/your-space-name"
+            "default": "huggingface-sync-action"
         },
         {
             "id": "syncDirectory",
             "type": "promptString",
             "description": "Directory to upload",
-            "default": "${workspaceFolder}"
+            "default": "${workspaceFolder}/test/space"
         },
         {
             "id": "hfToken",
