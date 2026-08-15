@@ -41,6 +41,9 @@ jobs:
           space_sdk: 'gradio'
           subdirectory: 'test/gradio'
 
+      - name: Prepare Space directory
+        run: bash scripts/link-gradio.sh --mode copy test/space/ test/gradio/
+
       - name: Sync README file with Git info to HuggingFace
         uses: xiaoyao9184/huggingface-sync-action@main
         with:
@@ -50,6 +53,6 @@ jobs:
           private: true
           repo_type: 'space'
           space_sdk: 'gradio'
-          subdirectory: 'test/gradio'
+          subdirectory: 'test/space'
           include_readme: true
           generate_message: true
