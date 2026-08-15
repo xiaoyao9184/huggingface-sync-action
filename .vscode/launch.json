@@ -5,7 +5,7 @@
             "name": "Sync with Hugging Face Spaces",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/sync_with_spaces.py",
+            "program": "${workspaceFolder}/sync_with_huggingface.py",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "args": [

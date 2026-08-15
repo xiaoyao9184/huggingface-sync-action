@@ -53,7 +53,7 @@ def main(
     print(f"\t- Repo synced: {commit_url}")
 
 def generate_commit_message(generate_message: bool, directory: str):
-    commit_message = "Synced repo using 'sync_with_huggingface' Github Action"
+    commit_message = "Synced repo using 'huggingface-sync-action' Github Action"
     if generate_message:
         try:
             repo = Repo(directory, search_parent_directories=True)
