@@ -1,5 +1,5 @@
 ---
-title: huggingface-sync-action
+title: huggingface-sync-action-gradio
 emoji: 🧪
 colorFrom: pink
 colorTo: purple
