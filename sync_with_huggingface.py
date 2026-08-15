@@ -59,8 +59,8 @@ def generate_commit_message(generate_message: bool, directory: str):
             repo = Repo(directory, search_parent_directories=True)
             remote_url = repo.remotes.origin.url
             commit_id = repo.head.commit.hexsha
-            action_repository = os.getenv("GITHUB_ACTION_REPOSITORY", "Unknown")
-            action_ref = os.getenv("GITHUB_ACTION_REF", "Unknown")
+            action_repository = os.getenv("GH_ACTION_REPOSITORY", "Unknown")
+            action_ref = os.getenv("GH_ACTION_REF", "Unknown")
             return textwrap.dedent(f"""\
                 {commit_message}
 

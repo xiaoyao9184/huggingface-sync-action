@@ -36,6 +36,13 @@ inputs:
   private:
     description: Hugging Face repo private
     default: 'False'
+  # https://github.com/actions/runner/issues/2473
+  action_repository:
+    description: Github Action repository
+    default: ${{ github.action_repository }}
+  action_ref:
+    description: Github Action ref
+    default: ${{ github.action_ref }}
 
 runs:
   using: "composite"
@@ -50,6 +57,10 @@ runs:
 
     - name: Push to hub
       shell: bash
+      env:
+        # The `GITHUB_` variable cannot be overwritten, so it needs to be renamed.
+        GH_ACTION_REPOSITORY: ${{ inputs.action_repository }}
+        GH_ACTION_REF: ${{ inputs.action_ref }}
       run: |
         pip install -r ${{ github.action_path }}/requirements.txt
         python ${{ github.action_path }}/sync_with_huggingface.py \
